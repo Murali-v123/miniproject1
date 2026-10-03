@@ -30,12 +30,12 @@ print(df["v1"].value_counts())
 
 # Rename important columns
 df = df.rename(columns={
-    "v1": "label",
-    "v2": "message"
+    "v1":"Label",
+    "v2":"Message"
 })
 
 # Remove unnecessary columns
-df = df[["label", "message"]]
+df=df[["Label","Message"]]
 
 print("\n----- CLEANED DATASET -----")
 print(df.head())
@@ -49,6 +49,9 @@ print(df.columns)
 # Remove duplicate rows
 df = df.drop_duplicates()
 
+#df after removing duplicates
+df.shape
+
 print("\n----- AFTER REMOVING DUPLICATES -----")
 print("Dataset shape:", df.shape)
 print("Duplicate rows:", df.duplicated().sum())
@@ -59,17 +62,16 @@ df.to_csv("data/cleaned_spam.csv", index=False)
 print("\nCleaned dataset saved successfully!")
 
 # Message length analysis
-
-df["message_length"] = df["message"].str.len()
+df["message_length"] = df["Message"].str.len()
 
 print("\n----- MESSAGE LENGTH -----")
 print(df["message_length"].describe())
 
 print("\n----- AVERAGE MESSAGE LENGTH BY LABEL -----")
-print(df.groupby("label")["message_length"].mean())
+print(df.groupby("Label")["message_length"].mean())
 
 # Plot label distribution
-df["label"].value_counts().plot(kind="bar")
+df["Label"].value_counts().plot(kind="bar")
 
 plt.title("Spam vs Ham Messages")
 plt.xlabel("Label")
@@ -77,7 +79,7 @@ plt.ylabel("Number of Messages")
 plt.show()
 
 # Plot message length distribution
-df["message_length"].plot(kind="hist", bins=30)
+df["message_length"].plot(kind="hist", bins=50)
 
 plt.title("Message Length Distribution")
 plt.xlabel("Message Length")
