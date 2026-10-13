@@ -135,3 +135,6 @@ df.to_csv("data/final_cleaned_spam.csv", index=False)
 print("\n----- FINAL DATASET SAVED -----")
 print("Final dataset shape:", df.shape)
 print("Saved as: data/final_cleaned_spam.csv")
+
+X = df["clean_message"]
+y = df["Label"]
