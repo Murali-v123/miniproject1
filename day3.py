@@ -11,6 +11,8 @@ from sklearn.metrics import (
 )
 from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import ComplementNB, MultinomialNB
+
+
 def clean_text(text):
     text = text.lower()
     text = re.sub(r"[^\w\s]", "", text)
@@ -60,7 +62,8 @@ print("\n----- TESTING LABEL DISTRIBUTION -----")
 print(y_test.value_counts())
 
 # Create TF-IDF vectorizer
-vectorizer = TfidfVectorizer()#it looks at single words 
+
+vectorizer = TfidfVectorizer(ngram_range=(1, 2))  # it looks at single words
 
 # Learn vocabulary from training data and transform it
 X_train_tfidf = vectorizer.fit_transform(X_train)
@@ -77,7 +80,7 @@ model = MultinomialNB()
 
 # Train the model
 model.fit(X_train_tfidf, y_train)
-#model.fit(X_train_tfidf, y_train) Here are thousands of messages and their correct labels. Learn the patterns that distinguish ham from spam."
+# model.fit(X_train_tfidf, y_train) Here are thousands of messages and their correct labels. Learn the patterns that distinguish ham from spam."
 
 print("\n----- MODEL TRAINING -----")
 print("Model trained successfully!")
@@ -133,10 +136,7 @@ print(confusion_matrix(y_test, y_pred))
 # Visualize confusion matrix
 cm = confusion_matrix(y_test, y_pred)
 
-disp = ConfusionMatrixDisplay(
-    confusion_matrix=cm,
-    display_labels=["ham", "spam"]
-)
+disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=["ham", "spam"])
 
 disp.plot()
 plt.title("Spam Detection Confusion Matrix")
